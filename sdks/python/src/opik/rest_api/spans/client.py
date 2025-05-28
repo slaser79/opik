@@ -10,6 +10,8 @@ from ..types.error_info import ErrorInfo
 from ..types.error_info_write import ErrorInfoWrite
 from ..types.feedback_score_batch_item import FeedbackScoreBatchItem
 from ..types.feedback_score_source import FeedbackScoreSource
+from ..types.json_list_string import JsonListString
+from ..types.json_list_string_write import JsonListStringWrite
 from ..types.json_node import JsonNode
 from ..types.json_node_write import JsonNodeWrite
 from ..types.project_stats_public import ProjectStatsPublic
@@ -23,6 +25,7 @@ from .types.find_feedback_score_names_1_request_type import FindFeedbackScoreNam
 from .types.get_span_stats_request_type import GetSpanStatsRequestType
 from .types.get_spans_by_project_request_type import GetSpansByProjectRequestType
 from .types.span_search_stream_request_public_type import SpanSearchStreamRequestPublicType
+from .types.span_update_type import SpanUpdateType
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -240,15 +243,15 @@ class SpansClient:
         self,
         *,
         trace_id: str,
-        name: str,
-        type: SpanWriteType,
         start_time: dt.datetime,
         id: typing.Optional[str] = OMIT,
         project_name: typing.Optional[str] = OMIT,
         parent_span_id: typing.Optional[str] = OMIT,
+        name: typing.Optional[str] = OMIT,
+        type: typing.Optional[SpanWriteType] = OMIT,
         end_time: typing.Optional[dt.datetime] = OMIT,
-        input: typing.Optional[JsonNodeWrite] = OMIT,
-        output: typing.Optional[JsonNodeWrite] = OMIT,
+        input: typing.Optional[JsonListStringWrite] = OMIT,
+        output: typing.Optional[JsonListStringWrite] = OMIT,
         metadata: typing.Optional[JsonNodeWrite] = OMIT,
         model: typing.Optional[str] = OMIT,
         provider: typing.Optional[str] = OMIT,
@@ -267,10 +270,6 @@ class SpansClient:
         ----------
         trace_id : str
 
-        name : str
-
-        type : SpanWriteType
-
         start_time : dt.datetime
 
         id : typing.Optional[str]
@@ -280,11 +279,15 @@ class SpansClient:
 
         parent_span_id : typing.Optional[str]
 
+        name : typing.Optional[str]
+
+        type : typing.Optional[SpanWriteType]
+
         end_time : typing.Optional[dt.datetime]
 
-        input : typing.Optional[JsonNodeWrite]
+        input : typing.Optional[JsonListStringWrite]
 
-        output : typing.Optional[JsonNodeWrite]
+        output : typing.Optional[JsonListStringWrite]
 
         metadata : typing.Optional[JsonNodeWrite]
 
@@ -316,16 +319,16 @@ class SpansClient:
         from Opik import OpikApi
         import datetime
         client = OpikApi(api_key="YOUR_API_KEY", workspace_name="YOUR_WORKSPACE_NAME", )
-        client.spans.create_span(trace_id='trace_id', name='name', type="general", start_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), )
+        client.spans.create_span(trace_id='trace_id', start_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), )
         """
         _response = self._raw_client.create_span(
             trace_id=trace_id,
-            name=name,
-            type=type,
             start_time=start_time,
             id=id,
             project_name=project_name,
             parent_span_id=parent_span_id,
+            name=name,
+            type=type,
             end_time=end_time,
             input=input,
             output=output,
@@ -365,7 +368,7 @@ class SpansClient:
         from Opik import SpanWrite
         import datetime
         client = OpikApi(api_key="YOUR_API_KEY", workspace_name="YOUR_WORKSPACE_NAME", )
-        client.spans.create_spans(spans=[SpanWrite(trace_id='trace_id', name='name', type="general", start_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), )], )
+        client.spans.create_spans(spans=[SpanWrite(trace_id='trace_id', start_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), )], )
         """
         _response = self._raw_client.create_spans(spans=spans, request_options=request_options)
         return _response.data
@@ -427,9 +430,11 @@ class SpansClient:
         project_name: typing.Optional[str] = OMIT,
         project_id: typing.Optional[str] = OMIT,
         parent_span_id: typing.Optional[str] = OMIT,
+        name: typing.Optional[str] = OMIT,
+        type: typing.Optional[SpanUpdateType] = OMIT,
         end_time: typing.Optional[dt.datetime] = OMIT,
-        input: typing.Optional[JsonNode] = OMIT,
-        output: typing.Optional[JsonNode] = OMIT,
+        input: typing.Optional[JsonListString] = OMIT,
+        output: typing.Optional[JsonListString] = OMIT,
         metadata: typing.Optional[JsonNode] = OMIT,
         model: typing.Optional[str] = OMIT,
         provider: typing.Optional[str] = OMIT,
@@ -456,11 +461,15 @@ class SpansClient:
 
         parent_span_id : typing.Optional[str]
 
+        name : typing.Optional[str]
+
+        type : typing.Optional[SpanUpdateType]
+
         end_time : typing.Optional[dt.datetime]
 
-        input : typing.Optional[JsonNode]
+        input : typing.Optional[JsonListString]
 
-        output : typing.Optional[JsonNode]
+        output : typing.Optional[JsonListString]
 
         metadata : typing.Optional[JsonNode]
 
@@ -495,6 +504,8 @@ class SpansClient:
             project_name=project_name,
             project_id=project_id,
             parent_span_id=parent_span_id,
+            name=name,
+            type=type,
             end_time=end_time,
             input=input,
             output=output,
@@ -1041,15 +1052,15 @@ class AsyncSpansClient:
         self,
         *,
         trace_id: str,
-        name: str,
-        type: SpanWriteType,
         start_time: dt.datetime,
         id: typing.Optional[str] = OMIT,
         project_name: typing.Optional[str] = OMIT,
         parent_span_id: typing.Optional[str] = OMIT,
+        name: typing.Optional[str] = OMIT,
+        type: typing.Optional[SpanWriteType] = OMIT,
         end_time: typing.Optional[dt.datetime] = OMIT,
-        input: typing.Optional[JsonNodeWrite] = OMIT,
-        output: typing.Optional[JsonNodeWrite] = OMIT,
+        input: typing.Optional[JsonListStringWrite] = OMIT,
+        output: typing.Optional[JsonListStringWrite] = OMIT,
         metadata: typing.Optional[JsonNodeWrite] = OMIT,
         model: typing.Optional[str] = OMIT,
         provider: typing.Optional[str] = OMIT,
@@ -1068,10 +1079,6 @@ class AsyncSpansClient:
         ----------
         trace_id : str
 
-        name : str
-
-        type : SpanWriteType
-
         start_time : dt.datetime
 
         id : typing.Optional[str]
@@ -1081,11 +1088,15 @@ class AsyncSpansClient:
 
         parent_span_id : typing.Optional[str]
 
+        name : typing.Optional[str]
+
+        type : typing.Optional[SpanWriteType]
+
         end_time : typing.Optional[dt.datetime]
 
-        input : typing.Optional[JsonNodeWrite]
+        input : typing.Optional[JsonListStringWrite]
 
-        output : typing.Optional[JsonNodeWrite]
+        output : typing.Optional[JsonListStringWrite]
 
         metadata : typing.Optional[JsonNodeWrite]
 
@@ -1119,17 +1130,17 @@ class AsyncSpansClient:
         import asyncio
         client = AsyncOpikApi(api_key="YOUR_API_KEY", workspace_name="YOUR_WORKSPACE_NAME", )
         async def main() -> None:
-            await client.spans.create_span(trace_id='trace_id', name='name', type="general", start_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), )
+            await client.spans.create_span(trace_id='trace_id', start_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), )
         asyncio.run(main())
         """
         _response = await self._raw_client.create_span(
             trace_id=trace_id,
-            name=name,
-            type=type,
             start_time=start_time,
             id=id,
             project_name=project_name,
             parent_span_id=parent_span_id,
+            name=name,
+            type=type,
             end_time=end_time,
             input=input,
             output=output,
@@ -1171,7 +1182,7 @@ class AsyncSpansClient:
         import asyncio
         client = AsyncOpikApi(api_key="YOUR_API_KEY", workspace_name="YOUR_WORKSPACE_NAME", )
         async def main() -> None:
-            await client.spans.create_spans(spans=[SpanWrite(trace_id='trace_id', name='name', type="general", start_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), )], )
+            await client.spans.create_spans(spans=[SpanWrite(trace_id='trace_id', start_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), )], )
         asyncio.run(main())
         """
         _response = await self._raw_client.create_spans(spans=spans, request_options=request_options)
@@ -1240,9 +1251,11 @@ class AsyncSpansClient:
         project_name: typing.Optional[str] = OMIT,
         project_id: typing.Optional[str] = OMIT,
         parent_span_id: typing.Optional[str] = OMIT,
+        name: typing.Optional[str] = OMIT,
+        type: typing.Optional[SpanUpdateType] = OMIT,
         end_time: typing.Optional[dt.datetime] = OMIT,
-        input: typing.Optional[JsonNode] = OMIT,
-        output: typing.Optional[JsonNode] = OMIT,
+        input: typing.Optional[JsonListString] = OMIT,
+        output: typing.Optional[JsonListString] = OMIT,
         metadata: typing.Optional[JsonNode] = OMIT,
         model: typing.Optional[str] = OMIT,
         provider: typing.Optional[str] = OMIT,
@@ -1269,11 +1282,15 @@ class AsyncSpansClient:
 
         parent_span_id : typing.Optional[str]
 
+        name : typing.Optional[str]
+
+        type : typing.Optional[SpanUpdateType]
+
         end_time : typing.Optional[dt.datetime]
 
-        input : typing.Optional[JsonNode]
+        input : typing.Optional[JsonListString]
 
-        output : typing.Optional[JsonNode]
+        output : typing.Optional[JsonListString]
 
         metadata : typing.Optional[JsonNode]
 
@@ -1311,6 +1328,8 @@ class AsyncSpansClient:
             project_name=project_name,
             project_id=project_id,
             parent_span_id=parent_span_id,
+            name=name,
+            type=type,
             end_time=end_time,
             input=input,
             output=output,

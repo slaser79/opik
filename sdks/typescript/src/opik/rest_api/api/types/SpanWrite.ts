@@ -10,12 +10,12 @@ export interface SpanWrite {
     projectName?: string;
     traceId: string;
     parentSpanId?: string;
-    name: string;
-    type: OpikApi.SpanWriteType;
+    name?: string;
+    type?: OpikApi.SpanWriteType;
     startTime: Date;
     endTime?: Date;
-    input?: OpikApi.JsonNodeWrite;
-    output?: OpikApi.JsonNodeWrite;
+    input?: OpikApi.JsonListStringWrite;
+    output?: OpikApi.JsonListStringWrite;
     metadata?: OpikApi.JsonNodeWrite;
     model?: string;
     provider?: string;
